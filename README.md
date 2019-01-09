@@ -657,7 +657,7 @@ Translations of the guide are available in the following languages:
     # good
     menu_item =
       %w[Spam Spam Spam Spam Spam Spam Spam Spam
-       Baked beans Spam Spam Spam Spam Spam]
+         Baked beans Spam Spam Spam Spam Spam]
     ```
 
   * <a name="underscores-in-numerics"></a>
@@ -2273,8 +2273,9 @@ condition](#safe-assignment-in-condition).
 
 
   * <a name="camelcase-classes"></a>
-    Use `CamelCase` for classes and modules.  (Keep acronyms like HTTP, RFC, XML
-    uppercase.)
+    Use `CamelCase` for classes and modules. Keep acronyms like HTTP, RFC, XML
+    uppercase. (If you're using ActiveSupport autoloading, you may want to add an
+    [acronym inflection](https://api.rubyonrails.org/classes/ActiveSupport/Inflector/Inflections.html#method-i-acronym).)
     <sup>[[link](#camelcase-classes)]</sup>
 
     ```ruby
@@ -2490,6 +2491,31 @@ condition](#safe-assignment-in-condition).
   * <a name="no-comments"></a>
     Write self-documenting code and ignore the rest of this section. Seriously!
     <sup>[[link](#no-comments)]</sup>
+
+  * <a name="rationale-comments"></a>
+    If the *how* can be made self-documenting, but not the *why* (e.g., the
+    code works around non-obvious library behavior, or implements an algorithm from
+    an academic paper), add a comment explaining the rationale behind the code.
+
+    ```ruby
+    # bad
+
+    x = BuggyClass.something.dup
+
+    def compute_dependency_graph
+      ...30 lines of recursive graph merging...
+    end
+
+    # good
+
+    # BuggyClass returns an internal object, so we have to dup it to modify it.
+    x = BuggyClass.something.dup
+
+    # This is algorithm 6.4(a) from Worf & Yar's _Amazing Graph Algorithms_ (2243).
+    def compute_dependency_graph
+      ...30 lines of recursive graph merging...
+    end
+    ```
 
   * <a name="english-comments"></a>
     Write comments in English.
